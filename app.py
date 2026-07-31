@@ -27,10 +27,10 @@ TAVILY_API_KEY= st.sidebar.text_input("TAVILY_API_KEY", type="password")
 # step:4 ========================API Validations==================
 
 All_API=[GOOGLE_API_KEY, TAVILY_API_KEY]
-if not all(ALL_API):
+if not all(All_API):
   st.sidebar.error("MUST PASS ALL API-KEYS")
 
-elif all(ALL_API):
+elif all(All_API):
   st.sidebar.error("API KEYS LOADED SUCCESSFULLY")
   # MODEL LOAD
   model=ChatGoogleGenerativeAI(
@@ -108,7 +108,7 @@ def run_agent(leader_agent, query):
 # Step:7======================================AGENT CALL===============================
 
 # leader_agent creation
-if all(ALL_API):
+if all(All_API):
   leader_agent = create_agent(
     model = model,
     tools = [search_latest_info,
