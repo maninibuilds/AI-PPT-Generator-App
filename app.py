@@ -39,7 +39,7 @@ elif all(All_API):
                                options=["gemini-2.5-flash",
                                         "gemini-2.5-flash-lite",
                                         "gemini-3.5-flash",
-                                        "gemini-3.5-flash-lite",])
+                                        "gemini-3.5-flash-lite"])
   )
 else:
   st.sidebar.info("CHECK-API-KEYS")
@@ -123,7 +123,7 @@ else:
 tab1,tab2,tab3= st.tabs(["Generate Image",
                          "Fetch Latest News",
                          "Generate PPT"])
-if (user_input) and (leader_agent):
+if user_input and leader_agent:
   # TAB:1 CODE
   with tab1:
     if st.button("Generate Image", key="Gen-Image"):
