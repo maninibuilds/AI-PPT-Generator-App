@@ -98,12 +98,12 @@ def run_agent(leader_agent, query):
   to generate image using async func and threading and give output in HTML no markdowns or text output.
   user query
   given below:  """
-    prompt= prompt+query
-    #prompt=agent_prompt(prompt)
-    response = leader_agent.invoke({'messages':[{'role':'user',
+  prompt=prompt+query
+  #prompt=agent_prompt(prompt)
+  response = leader_agent.invoke({'messages':[{'role':'user',
                                                'content':prompt}]})
-    code = response['messages'][-1].content[-1]['text']
-    return code
+  code = response['messages'][-1].content[-1]['text']
+  return code
 
 # Step:7======================================AGENT CALL===============================
 
