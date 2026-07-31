@@ -135,7 +135,7 @@ if (user_input) and (leader_agent):
           url=f"https://image.pollinations.ai/{user_input}"
           time.sleep(4)
           img=generate_image(user_input)
-          st.image(img)
+          st.image(url)
 
     # TAB:2 CODE
     with tab2:
