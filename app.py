@@ -14,15 +14,15 @@ import streamlit as st
 #Step:2=========================Streamlit-Frontend=================
 
 # To show web page complete page layout
-st.side_page_config(layout="wide")
+st.set_page_config(layout="wide")
 st.title("AI PPT GENERATOR")
 st.divider()
 st.sidebar.title("Enter API Keys")
 
 # step: 3 =======================Load API Keys====================
 
-GOOGLE_API_KEY= st.sidebar.text_input("Google-API", type="password")
-TAVILY_API_KEY= st.sidebar.text_input("TAVILY-API", type="password")
+GOOGLE_API_KEY= st.sidebar.text_input("Google_API_KEY", type="password")
+TAVILY_API_KEY= st.sidebar.text_input("TAVILY_API_KEY", type="password")
 
 # step:4 ========================API Validations==================
 
@@ -31,7 +31,7 @@ if not all(ALL_API):
   st.sidebar.error("MUST PASS ALL API-KEYS")
 
 elif all(ALL_API):
-  st.sidebar.success("API KEYS LOADED SUCCESSFULLY")
+  st.sidebar.error("API KEYS LOADED SUCCESSFULLY")
   # MODEL LOAD
   model=ChatGoogleGenerativeAI(
     google_api_key= GOOGLE_API_KEY,
@@ -78,12 +78,12 @@ def agent_prompt(query):
   prompt=f"""Give detailed highly professional prompt for below given prompt
   You are a professsional ppt designer, based on user given query, your task is to professional HTML output prompt with no markdowns
   User Query: {query}"""
-  response=model.invoke(prompt)
-  final_prompt=response.content[-1]['text']
+    response=model.invoke(prompt)
+    final_prompt=response.content[-1]['text']
 
-  with open("PPT_PROMPT.txt",'w') as f:
-    f.write(final_prompt)
-  return final_prompt
+    with open("PPT_PROMPT.txt",'w') as f:
+      f.write(final_prompt)
+    return final_prompt
 
 def run_agent(leader_agent, query):
   prompt = f"""Based on Below given Query,
@@ -98,22 +98,25 @@ def run_agent(leader_agent, query):
   to generate image using async func and threading and give output in HTML no markdowns or text output.
   user query
   given below:  """
-  prompt= prompt+query
-  #prompt=agent_prompt(prompt)
-  response = leader_agent.invoke({'messages':[{'role':'user',
+    prompt= prompt+query
+    #prompt=agent_prompt(prompt)
+    response = leader_agent.invoke({'messages':[{'role':'user',
                                                'content':prompt}]})
-  code = response['messages'][-1].content[-1]['text']
-  return code
+    code = response['messages'][-1].content[-1]['text']
+    return code
 
 # Step:7======================================AGENT CALL===============================
 
 # leader_agent creation
-leader_agent = create_agent(
+if all(ALL_API):
+  leader_agent = create_agent(
     model = model,
     tools = [search_latest_info,
              generate_image
              ]
 )
+else:
+  st.info("Pass-ALL-API-Keys and rerun")
 
 #Step:8========================================NAVAAR STREAMLIT==============================
 
@@ -127,6 +130,7 @@ if (user_input) and (leader_agent):
       with st.spinner("Running Agent"):
         try:
           generate_image(user_input)
+          st.image(img)
         except:
           url=f"https://image.pollinations.ai/{user_input}"
           time.sleep(4)
@@ -169,6 +173,8 @@ if (user_input) and (leader_agent):
                 )
             except Exception as err:
               st.error(err)
+else:
+  st.error("Something went wrong!!")
           
 
     
