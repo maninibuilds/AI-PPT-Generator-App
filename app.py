@@ -78,12 +78,12 @@ def agent_prompt(query):
   prompt=f"""Give detailed highly professional prompt for below given prompt
   You are a professsional ppt designer, based on user given query, your task is to professional HTML output prompt with no markdowns
   User Query: {query}"""
-    response=model.invoke(prompt)
-    final_prompt=response.content[-1]['text']
+  response=model.invoke(prompt)
+  final_prompt=response.content[-1]['text']
 
-    with open("PPT_PROMPT.txt",'w') as f:
-      f.write(final_prompt)
-    return final_prompt
+  with open("PPT_PROMPT.txt",'w') as f:
+    f.write(final_prompt)
+  return final_prompt
 
 def run_agent(leader_agent, query):
   prompt = f"""Based on Below given Query,
