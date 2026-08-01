@@ -69,7 +69,7 @@ def generate_image(img_prompt,slide_no=1):
     f.write(content)
   from PIL import Image
   img=Image.open(f"ai_image_{slide_no}.jpeg")
-  return img
+  return url
 
 def agent_prompt(query):
   """This helps to promptify the given user, query suppose user nedds ppt based
