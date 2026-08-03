@@ -62,12 +62,13 @@ user_input= st.text_area("Write here:")
 
 def generate_image(img_prompt,slide_no=1):
   """This function elps user to generate image using free api, with given img_prompt"""
-  url=f"https://image.pollinations.ai/{img_prompt}"
+  url=f"https://image.pollinations.ai/prompt/{img_prompt}"
   import requests as r
   content=r.get(url).content
   with open(f"ai_image_{slide_no}.jpeg","wb") as f:
     f.write(content)
   from PIL import Image
+  print(os.path.getsize(f"ai_image_{slide_no}.jpeg"))
   img=Image.open(f"ai_image_{slide_no}.jpeg")
   return url
 
